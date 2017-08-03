@@ -1,0 +1,12 @@
+
+node_modules/
+
+*.dylib
+*.o
+*.a
+*.so
+*.dll
+*.sw?
+
+
+
