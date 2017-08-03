@@ -1,0 +1,7 @@
+
+module Ta [system] [extern_c] {
+    umbrella header "../export-cpp/somethingLib.h"
+    export *
+    module * { export * }
+}
+
