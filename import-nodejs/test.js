@@ -36,6 +36,7 @@ let somethingLib  = ffi.Library("../export-cpp/something.dylib", {
 
 function f_arrayDouble() {
   let ret = somethingLib.f_arrayDouble();
+  // Important: let the 'js' structure know the length of the raw C array:
   ret.length = 3; // expected length based on your C code
   return ret
 }
