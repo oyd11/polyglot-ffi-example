@@ -1,49 +1,57 @@
 'use strict'
-let ref = require('ref');
 let ffi = require('ffi');
 let Struct = require('ref-struct');
-let CString = ref.types.CString;
-
-/// Pointer types
-let doublePtr = ref.refType('double');
-let floatPtr  = ref.refType('float');
-let shortPtr  = ref.refType('short');
-let longPtr   = ref.refType('long');
-let boolPtr   = ref.refType('bool');
-/// Array types
 let ArrayType  = require('ref-array');
+
+// Getting arrays from C interface into node/Javascript : see:
+// https://github.com/node-ffi/node-ffi/issues/279
+// " set the .length to the proper value "
+// nice choice, but - could be nice to document it:
+//   https://github.com/TooTallNate/ref-array
+
 let doubleArray = ArrayType('double');
-//let doubleArray = ArrayType(ref.types.double);
 let floatArray  = ArrayType('float');
 let shortArray  = ArrayType('short');
 
+/*
+typedef struct {
+    int a;
+    const double *p;
+    const char *str;
+} TestStruct;
+*/
+
 let CTestStruct = Struct({
-  'a': 'int', 
+  'a': 'int',
   'p': doubleArray,
   'str': 'string',
 });
 
-class SomethingLib {
-  constructor(libName) {
-    this.lib = ffi.Library("../export-cpp/something.dylib", {
+let somethingLib  = ffi.Library("../export-cpp/something.dylib", {
     // const double *f_arrayDouble();
-      'f_arrayDouble': ['doublePtr', [ ] ],
+    'f_arrayDouble': [doubleArray, [ ] ],
     // TestStruct f_struct();
-      'f_struct': ['CTestStruct', []]
-    });
-  }
-  f1() {
-    return this.f_arrayDouble();
-  }
-  f2() {
-    return this.f_struct();
-  }
+    'f_struct': [CTestStruct, []]
+  });
+
+function f_arrayDouble() {
+  let ret = somethingLib.f_arrayDouble();
+  ret.length = 3; // expected length based on your C code
+  return ret
 }
 
-l = new SomethingLib()
+function f_struct() {
+  let ret = somethingLib.f_struct();
+  ret.p.length = 3;
+  return ret;
+}
 
-q = l.f1()
-// l.f2()
+let arr = f_arrayDouble();
+console.log('Array from C: ' ,arr);
+console.log('values : ' ,arr[0], arr[1], arr[2]);
 
-
-
+let s = f_struct();
+console.log('struct from C: ' );
+console.log('fields: a: ', s.a );
+console.log('        p : ', s.p[0],s.p[1], s.p[2]);
+console.log('        str: ', s.str );
