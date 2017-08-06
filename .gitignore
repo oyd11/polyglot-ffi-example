@@ -7,6 +7,4 @@ node_modules/
 *.so
 *.dll
 *.sw?
-
-
-
+*.exe

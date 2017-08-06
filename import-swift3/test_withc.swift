@@ -1,5 +1,0 @@
-
-import Foundation
-
-print("qwe")
-
