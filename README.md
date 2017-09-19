@@ -4,6 +4,8 @@ FFI - (Foreign function interface) (sometimes called 'interop') to and from a "C
 
 This is a collection of minimal examples - specifically of how to transfer Arrays of Data - and Text-Strings, back and forth between programming languages.
 
+ * Out-of-the-box : Only MacOS version is probably running, it's a matter of .dylib vs .so extention to make it run on Linux (I'll add Dockerfiles and running versions)
+
 These are usually small bridging code snippets, with some specifics. I use this as a testing template, detached from the complexities of a real project.
 
 Directory structure:
