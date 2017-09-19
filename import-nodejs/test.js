@@ -56,3 +56,23 @@ console.log('struct from C: ' );
 console.log('fields: a: ', s.a );
 console.log('        p : ', s.p[0],s.p[1], s.p[2]);
 console.log('        str: ', s.str );
+
+
+// calling f_arrayDouble - async just for fun:
+
+
+function testAsync() {
+  somethingLib.f_arrayDouble.async( (err, ret) => {
+      // Important: let the 'js' structure know the length of the raw C array:
+      ret.length = 3; // expected length based on your C code
+      console.log('__async returned__');
+      console.log('arr from C: ' );
+      console.log(ret[0],ret[1], ret[2]);
+    } )
+}
+
+console.log('will call: testAsync()');
+testAsync();
+console.log('called: testAsync()');
+
+

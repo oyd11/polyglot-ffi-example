@@ -9,6 +9,7 @@ These are usually small bridging code snippets, with some specifics. I use this 
 Directory structure:
 * [export-cpp] - exports an ABI from C++ (Build this first to import them from other places)
 * [import-julia06] - Julia lang 0.6
-* [import-nodejs] - javascript - using Node.js ffi
-* [import-swift3] - swift 3
+* [import-nodejs](./import-nodejs/nodejs-example.md) - javascript - using Node.js ffi, including async calls
+* [import-nodejs-fastcall](./import-nodejs-fastcall/nodejs-fastcall-example.md) - javascript - using Node.js 'fastcall'
+* [import-swift3](./import-swift3/swift-example.md) - swift 3
 

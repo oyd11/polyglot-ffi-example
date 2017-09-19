@@ -6,3 +6,8 @@ Currently:
  * Didn't get interpreted version `swift` commandline to running (missing the dynamic-library) (only compiled `swiftc` version)
 
 Excuse the .exe extension standard, it simplifies .gitignore .dockerignore
+
+run:
+ * make 
+ * ./test.exe
+
