@@ -12,6 +12,7 @@ extern "C" {
 #endif // __cplusplus
     const double *f_arrayDouble();
     TestStruct f_struct();
+    void f_printPointer(void*p);
 #ifdef __cplusplus
 }
 #endif // __cplusplus

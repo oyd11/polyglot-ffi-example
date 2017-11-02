@@ -28,3 +28,15 @@ print("Struct:")
 print("a: ", s.a)
 print("arr: ", s.arr)
 print("str: ", s.str)
+
+
+let p1 = UnsafeMutableRawPointer( bitPattern: 0x0123)
+let p2 = UnsafeMutableRawPointer( bitPattern: 0x0)
+let p3 : UnsafeMutableRawPointer? = nil 
+
+f_printPointer(p1)
+f_printPointer(p2)
+f_printPointer(p3)
+
+
+

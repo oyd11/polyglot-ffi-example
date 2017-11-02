@@ -1,4 +1,5 @@
 
+#include <cstdio>
 #include "somethingLib.h"
 
 static const double g_data[] = {1.0, 2.0, 3.0};
@@ -16,6 +17,10 @@ TestStruct f_struct() {
     t.str = g_str;
 
     return t;
+}
+
+void f_printPointer(void*p) {
+    printf("%p\n",p);
 }
 
 
