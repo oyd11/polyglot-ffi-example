@@ -31,7 +31,9 @@ let somethingLib  = ffi.Library("../export-cpp/something.dylib", {
     // const double *f_arrayDouble();
     'f_arrayDouble': [doubleArray, [ ] ],
     // TestStruct f_struct();
-    'f_struct': [CTestStruct, []]
+    'f_struct': [CTestStruct, []],
+    // void f_printPointer(void*p);
+    'f_printPointer': ['void', ['pointer']]
   });
 
 function f_arrayDouble() {
@@ -74,5 +76,14 @@ function testAsync() {
 console.log('will call: testAsync()');
 testAsync();
 console.log('called: testAsync()');
+
+let p1 = 0x0123 // donno how to set a numeric value so that 'ffi-ref' will read it..
+let p2 = null // null - works as zero thouhg!
+let p3 = undefined
+
+console.log("calling a func that prints raw pointer values:")
+//somethingLib.f_printPointer(p1) // skipping, should be 'casted' to a pointer to work
+somethingLib.f_printPointer(p2)
+// somethingLib.f_printPointer(p3) // skipping, undef is not null
 
 
