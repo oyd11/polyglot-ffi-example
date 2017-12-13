@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict'
 let ffi = require('ffi');
 let Struct = require('ref-struct');
@@ -27,13 +28,30 @@ let CTestStruct = Struct({
   'str': 'string',
 });
 
+let CTestA = Struct({
+  'x': 'float',
+  'y': 'float',
+});
+let CTestB = Struct({
+  'color': 'int',
+});
+
+let CTestStructBoth = Struct({
+  'hasA': 'int',
+  'hasB': 'int',
+  'a': CTestA,
+  'b': CTestB,
+});
+
 let somethingLib  = ffi.Library("../export-cpp/something.dylib", {
     // const double *f_arrayDouble();
     'f_arrayDouble': [doubleArray, [ ] ],
     // TestStruct f_struct();
     'f_struct': [CTestStruct, []],
     // void f_printPointer(void*p);
-    'f_printPointer': ['void', ['pointer']]
+    'f_printPointer': ['void', ['pointer']],
+    // TestStructBoth f_structBoth();
+    'f_structBoth': [CTestStructBoth, []],
   });
 
 function f_arrayDouble() {
@@ -85,5 +103,11 @@ console.log("calling a func that prints raw pointer values:")
 //somethingLib.f_printPointer(p1) // skipping, should be 'casted' to a pointer to work
 somethingLib.f_printPointer(p2)
 // somethingLib.f_printPointer(p3) // skipping, undef is not null
+
+let q = somethingLib.f_structBoth()
+console.log("f_structBoth: ", q)
+console.log("q.a.x: ", q.a.x)
+console.log("q.b.color: ", q.b.color)
+
 
 
