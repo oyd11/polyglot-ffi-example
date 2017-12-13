@@ -1,4 +1,4 @@
-
+#!/usr/bin/env julia
 
 
 
@@ -20,13 +20,13 @@ typedef struct {
 } TestStruct;
 =#
 
-mutable struct CTestStruct
+struct CTestStruct
     a::Cint
     p::Ptr{Cdouble}
     str::Cstring
 end
 
-mutable struct TestStruct
+struct TestStruct
     a::Int
     p::Vector{Float64}
     str::String
@@ -46,3 +46,47 @@ println("array from C: ", a)
 
 c,d = f_struct()
 println("struct from C: ", c)
+
+function f_printPointer(p)
+    f = Libdl.dlsym(something_lib , :f_printPointer)
+    ccall( f , Void, (Ptr{Void},)
+     , p )
+end
+
+p1 = Ptr{Void}(UInt(0x0123))
+p2 = Ptr{Void}(0)
+
+f_printPointer(p1)
+f_printPointer(p2)
+
+struct CTestA
+    x::Cfloat
+    y::Cfloat
+end
+
+struct CTestB
+    color::Cint
+end
+
+struct CTestStructBoth
+    hasA::Cint
+    hasB::Cint
+    a::CTestA
+    b::CTestB
+end
+
+function f_structBoth()
+    f = Libdl.dlsym(something_lib , :f_structBoth)
+    cret = ccall( f , CTestStructBoth, ())
+    return cret
+end
+
+q = f_structBoth()
+println("struct from C: ", q)
+println("q.a.x: ", q.a.x)
+println("q.b.color: ", q.b.color)
+
+
+
+
+

@@ -38,5 +38,8 @@ f_printPointer(p1)
 f_printPointer(p2)
 f_printPointer(p3)
 
-
+let q = f_structBoth()
+print("struct from C: ", q)
+print("q.a.x: ", q.a.x)
+print("q.b.color: ", q.b.color)
 
